@@ -18,13 +18,17 @@ const std::string kVersionFilename{"/version"};
 const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
+// Utility function
+std::string ParseValueFromFile(const std::string filepath, std::string &key,
+                               const char delim = ' ');
+
 // System
 float MemoryUtilization();
 long UpTime();
 std::vector<int> Pids();
 int TotalProcesses();
 int RunningProcesses();
-std::string OperatingSystem();
+std::string OperatingSystem();  // returns OS "pretty" name
 std::string Kernel();
 
 // CPU
@@ -40,11 +44,8 @@ enum CPUStates {
   kGuest_,
   kGuestNice_
 };
-std::vector<std::string> CpuUtilization();
-long Jiffies();
-long ActiveJiffies();
-long ActiveJiffies(int pid);
-long IdleJiffies();
+std::vector<std::string> CpuUtilization();         // for use from Processor
+std::vector<std::string> CpuUtilization(int pid);  // for use from Process
 
 // Processes
 std::string Command(int pid);

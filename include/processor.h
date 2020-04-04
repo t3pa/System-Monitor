@@ -3,7 +3,9 @@
 
 class Processor {
  public:
-  float Utilization();  // TODO: See src/processor.cpp
+  float Utilization();  // returns instantaneous utilization (against previous
+                        // call stats)
+  unsigned int Total() const;  // returns total jiffies
 
  private:
   struct cpu_stats {

@@ -2,6 +2,7 @@
 #define SYSTEM_H
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "process.h"
@@ -19,8 +20,9 @@ class System {
   std::string OperatingSystem();      // Operating system accessor
 
  private:
-  Processor cpu_ = {};                   // aggregate CPU statistics
-  std::vector<Process> processes_ = {};  // running processes
+  Processor cpu_ = {};                         // aggregate CPU statistics
+  std::unordered_map<int, Process> processes;  // running processes hash table
+  std::vector<Process> process_list = {};  // running processes (output list)
 };
 
 #endif

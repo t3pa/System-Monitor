@@ -22,14 +22,24 @@ Processor& System::Cpu() { return cpu_; }
 
 // Return a container composed of the system's processes
 vector<Process>& System::Processes() {
-  processes_.clear();
+  process_list.clear();
   vector<int> pids = LinuxParser::Pids();
   for (auto i : pids) {
-    Process p(i);
-    processes_.push_back(p);
+    if (processes.find(i) == processes.end()) {
+      // Process not in map
+      Process p(i, &cpu_);
+      p.UpdateUtilization();
+      processes[i] = p;  // add to map
+      process_list.emplace_back(p);
+    } else {
+      // Process already existing
+      Process p = processes[i];
+      p.UpdateUtilization();
+      process_list.emplace_back(p);
+    }
   }
-  std::sort(processes_.rbegin(), processes_.rend());
-  return processes_;
+  std::sort(process_list.rbegin(), process_list.rend());
+  return process_list;
 }
 
 // Return the system's kernel identifier (string)

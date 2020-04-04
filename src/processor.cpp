@@ -33,3 +33,5 @@ float Processor::Utilization() {
     return utilization;
   }
 }
+
+unsigned int Processor::Total() const { return current.Total; }
